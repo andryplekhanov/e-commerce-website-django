@@ -13,12 +13,30 @@ from django.views.generic import CreateView, UpdateView
 from app_users.forms import UserLoginForm, CreationUserForm, UserChangingForm, PasswordSetForm, ResetPasswordForm
 from .models import User
 
+AUTH_MENU = [
+    {'title': _('Личный кабинет'), 'url_name': 'profile'},
+    {'title': _('Редактировать профиль'), 'url_name': 'edit_profile'},
+    {'title': _('История заказов'), 'url_name': 'index'},
+    {'title': _('История просмотров'), 'url_name': 'index'},
+]
+NOT_AUTH_MENU = [
+    {'title': _('Вход'), 'url_name': 'login'},
+    {'title': _('Регистрация'), 'url_name': 'signup'}
+]
+
+PASSWORD_RESET_EXTRA_CONTEXT = {'menu': NOT_AUTH_MENU, 'breadcrumbs': [_('Сброс пароля'), ], 'title': _('Сброс пароля')}
+
 
 class Signup(CreateView):
     model = User
     form_class = CreationUserForm
     template_name = 'app_users/signup.html'
     success_url = reverse_lazy('profile')
+    extra_context = {'menu': NOT_AUTH_MENU,
+                     'current_elem': 'signup',
+                     'breadcrumbs': [_('Регистрация'), ],
+                     'title': _('Регистрация'),
+                     }
 
     def dispatch(self, *args, **kwargs):
         if self.request.user.is_authenticated:
@@ -43,6 +61,7 @@ class LogInView(LoginView):
     template_name = 'app_users/login.html'
     authentication_form = UserLoginForm
     next_page = reverse_lazy('index')
+    extra_context = {'menu': NOT_AUTH_MENU, 'breadcrumbs': [_('Вход'), ], 'title': _('Вход'), 'current_elem': 'login'}
 
 
 class LogOutView(LogoutView):
@@ -55,6 +74,11 @@ class EditProfileView(LoginRequiredMixin, UpdateView):
     model = User
     template_name = 'app_users/edit_profile.html'
     success_url = reverse_lazy('profile')
+    extra_context = {'menu': AUTH_MENU,
+                     'breadcrumbs': [_('Личный кабинет'), _('Редактировать профиль')],
+                     'title': _('Личный кабинет'),
+                     'current_elem': 'edit_profile'
+                     }
 
     def get_success_url(self):
         return reverse('edit_profile')
@@ -79,23 +103,31 @@ class EditProfileView(LoginRequiredMixin, UpdateView):
 
 @login_required
 def account_view(request):
-    return render(request, 'app_users/profile.html', {'user': request.user})
+    return render(request, 'app_users/profile.html', {'user': request.user,
+                                                      'menu': AUTH_MENU,
+                                                      'breadcrumbs': [_('Личный кабинет'), ],
+                                                      'title': _('Личный кабинет'),
+                                                      'current_elem': 'profile'
+                                                      })
 
 
 class ResetPasswordView(PasswordResetView):
     email_template_name = 'app_users/password_reset_email.html'
     template_name = 'app_users/password_reset_form.html'
     form_class = ResetPasswordForm
+    extra_context = PASSWORD_RESET_EXTRA_CONTEXT
 
 
 class ResetPasswordDoneView(PasswordResetDoneView):
     template_name = 'app_users/password_reset_done.html'
+    extra_context = PASSWORD_RESET_EXTRA_CONTEXT
 
 
 class ResetPasswordConfirmView(PasswordResetConfirmView):
     template_name = 'app_users/password_reset_confirm.html'
     form_class = PasswordSetForm
     post_reset_login = False
+    extra_context = PASSWORD_RESET_EXTRA_CONTEXT
 
     def get_success_url(self):
         return reverse_lazy('password_reset_complete')
@@ -103,3 +135,4 @@ class ResetPasswordConfirmView(PasswordResetConfirmView):
 
 class ResetPasswordCompleteView(PasswordResetCompleteView):
     template_name = 'app_users/password_reset_complete.html'
+    extra_context = PASSWORD_RESET_EXTRA_CONTEXT
