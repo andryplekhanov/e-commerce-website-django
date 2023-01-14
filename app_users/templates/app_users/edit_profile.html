@@ -16,7 +16,7 @@
                     <div class="row-block">
                         <div class="form-group">
                             <label class="form-label" for="{{ form.avatar.id_for_avatar }}">
-                                Аватар
+                                {% trans 'Аватар' %}
                             </label>
                             <div class="Profile-avatar">
                                 <div class="Profile-img">
@@ -27,7 +27,7 @@
                                     {% endif %}
                                 </div>
                                 <label class="Profile-fileLabel" for="{{ form.avatar.id_for_avatar }}">
-                                    Выберите аватар
+                                    {% trans 'Выберите аватар' %}
                                 </label>
                                 {{ form.avatar }}
                                 {% if form.avatar.errors %}
@@ -39,7 +39,7 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="{{ form.full_name.id_for_full_name }}">
-                                ФИО
+                                {% trans 'ФИО' %}
                             </label>
                             {{ form.full_name }}
                             {% if form.full_name.errors %}
@@ -52,7 +52,7 @@
                     <div class="row-block">
                         <div class="form-group">
                             <label class="form-label" for="{{ form.phone_number.id_for_phone_number }}">
-                                Телефон
+                                {% trans 'Телефон' %}
                             </label>
                             {{ form.phone_number }}
                             {% if form.phone_number.errors %}
@@ -72,7 +72,7 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="{{ form.password1.id_for_password1 }}">
-                                Пароль
+                                {% trans 'Пароль' %}
                             </label>
                             {{ form.password1 }}
                             {% if form.password1.errors %}
@@ -83,7 +83,7 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="{{ form.password2.id_for_password2 }}">
-                                Подтверждение пароля
+                                {% trans 'Подтверждение пароля' %}
                             </label>
                             {{ form.password2 }}
                             {% if form.password2.errors %}
@@ -94,7 +94,7 @@
                         </div>
                         <div class="form-group">
                             <div class="Profile-btn">
-                                <button class="btn btn_success" type="submit">Сохранить</button>
+                                <button class="btn btn_success" type="submit">{% trans 'Сохранить' %}</button>
                             </div>
                             {% if messages %}
                                 {% for message in messages %}

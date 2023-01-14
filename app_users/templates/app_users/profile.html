@@ -17,7 +17,7 @@
                 </div>
                 <div class="Account-column">
                     <div class="Account-name">{{ user.full_name }}</div>
-                    <a class="Account-editLink" href="{% url 'edit_profile' %}">Редактировать профиль</a>
+                    <a class="Account-editLink" href="{% url 'edit_profile' %}">{% trans 'Редактировать профиль' %}</a>
                 </div>
             </div>
             <div class="Account-group">
