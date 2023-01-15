@@ -4,7 +4,7 @@ from app_product.models import *
 
 
 class ParameterValueInline(admin.TabularInline):
-    model = Parameter
+    model = Parameter.products.through
 
 
 class ImageInline(admin.TabularInline):
@@ -18,10 +18,11 @@ class CategoryAdmin(DjangoMpttAdmin):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug', 'price', 'stock', 'available', 'vendor', 'created', 'updated']
-    list_filter = ['category', 'available', 'created', 'updated']
-    list_editable = ['price', 'stock', 'available']
+    list_display = ['name', 'category', 'price', 'stock', 'available', 'limited', 'vendor', 'created', 'updated']
+    list_filter = ['category', 'available', 'created', 'updated', 'limited', 'vendor', 'manufacturer']
+    list_editable = ['price', 'stock', 'available', 'limited']
     prepopulated_fields = {'slug': ('name',)}
+    save_on_top = True
     inlines = [ImageInline, ParameterValueInline]
 
 
