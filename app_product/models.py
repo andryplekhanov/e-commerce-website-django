@@ -1,3 +1,4 @@
+from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.db.models import Min
 from django.urls import reverse
@@ -6,16 +7,29 @@ from mptt.fields import TreeForeignKey
 from mptt.models import MPTTModel
 from django.utils.translation import gettext_lazy as _
 
+from app_product.validators import product_image_size_validate
 from app_vendor.models import Vendor
+
+image_validator = FileExtensionValidator(
+        allowed_extensions=['png', 'jpg', 'gif'],
+        message=_('Ошибка загрузки: допускаются только файлы с расширением .jpg .gif .png')
+    )
+
+icon_validator = FileExtensionValidator(
+        allowed_extensions=['png', ],
+        message=_('Ошибка загрузки: допускаются только файлы с расширением .png')
+    )
 
 
 class Category(MPTTModel):
     name = models.CharField(max_length=255, db_index=True, verbose_name=_('название'))
     slug = models.SlugField(max_length=255, db_index=True, unique=True, verbose_name=_('url-адрес'))
-    icon = models.FileField(upload_to='category/', blank=True, verbose_name=_('иконка'), db_index=True)
+    icon = models.FileField(upload_to='category/', blank=True, verbose_name=_('иконка'), db_index=True,
+                            validators=[icon_validator, product_image_size_validate])
     parent = TreeForeignKey('self', on_delete=models.PROTECT, null=True, blank=True, related_name='children',
                             db_index=True, verbose_name=_('родительская категория'))
-    image = models.ImageField(blank=True, upload_to='category/', verbose_name=_('изображение'), db_index=True)
+    image = models.ImageField(blank=True, upload_to='category/', verbose_name=_('изображение'), db_index=True,
+                              validators=[image_validator, product_image_size_validate])
 
     class MPTTMeta:
         order_insertion_by = ['name']
@@ -98,7 +112,8 @@ class ParameterValue(models.Model):
 
 
 class Image(models.Model):
-    image = models.ImageField(upload_to='products/%Y/%m/%d', verbose_name=_('изображение'))
+    image = models.ImageField(upload_to='products/%Y/%m/%d', verbose_name=_('изображение'),
+                              validators=[image_validator, product_image_size_validate])
     product = models.ForeignKey('Product', on_delete=models.CASCADE, related_name='images', verbose_name=_('продукт'))
 
     class Meta:
