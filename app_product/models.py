@@ -51,7 +51,6 @@ class Product(models.Model):
     category = TreeForeignKey('Category', on_delete=models.PROTECT, related_name='category', verbose_name=_('категория'), db_index=True)
     vendor = models.ForeignKey(Vendor, related_name='products', on_delete=models.CASCADE, verbose_name=_('магазин'), db_index=True)
     name = models.CharField(max_length=200, db_index=True, verbose_name=_('название'))
-    slug = models.SlugField(max_length=200, db_index=True, verbose_name=_('url-адрес'))
     description = models.TextField(blank=True, verbose_name=_('описание'), db_index=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_('цена'), db_index=True)
     stock = models.PositiveIntegerField(verbose_name=_('остаток'), db_index=True)
@@ -63,12 +62,11 @@ class Product(models.Model):
 
     class Meta:
         ordering = ('price',)
-        index_together = (('id', 'slug'),)
         verbose_name = _('продукт')
         verbose_name_plural = _('продукты')
 
     def get_absolute_url(self):
-        return reverse('product_detail', args=[self.pk, self.slug])
+        return reverse('product_detail', args=[self.pk])
 
     def __str__(self):
         return self.name
