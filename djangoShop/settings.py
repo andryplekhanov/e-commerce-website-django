@@ -37,7 +37,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'sorl.thumbnail',
     'app_main.apps.AppMainConfig',
+    'app_cart.apps.AppCartConfig',
+    'app_users.apps.AppUsersConfig',
+    'app_orders.apps.AppOrdersConfig',
+    'app_payment.apps.AppPaymentConfig',
+    'app_product.apps.AppProductConfig',
+    'app_review.apps.AppReviewConfig',
+    'app_settings.apps.AppSettingsConfig',
+    'app_vendor.apps.AppVendorConfig',
+    'mptt',
+    'django_mptt_admin',
 
 ]
 
@@ -103,6 +114,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+AUTH_USER_MODEL = 'app_users.User'
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -135,3 +148,4 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/'
 CART_SESSION_ID = 'cart'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
