@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'sorl.thumbnail',
     'app_main.apps.AppMainConfig',
     'app_cart.apps.AppCartConfig',
     'app_users.apps.AppUsersConfig',

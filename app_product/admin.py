@@ -18,10 +18,9 @@ class CategoryAdmin(DjangoMpttAdmin):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'category', 'price', 'stock', 'available', 'limited', 'manufacturer', 'vendor', 'created', 'updated']
+    list_display = ['id', 'name', 'category', 'price', 'stock', 'available', 'limited', 'manufacturer', 'vendor', 'created', 'updated']
     list_filter = ['category', 'available', 'created', 'updated', 'limited', 'vendor', 'manufacturer']
     list_editable = ['price', 'stock', 'available', 'limited']
-    prepopulated_fields = {'slug': ('name',)}
     save_on_top = True
     inlines = [ImageInline, ParameterValueInline]
 
