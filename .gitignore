@@ -8,6 +8,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+media/cache/
 build/
 develop-eggs/
 dist/
@@ -58,7 +59,7 @@ coverage.xml
 # Django stuff:
 *.log
 local_settings.py
-db.sqlite3
+#db.sqlite3
 db.sqlite3-journal
 
 # Flask stuff:

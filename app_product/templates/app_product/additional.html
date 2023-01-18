@@ -1,0 +1,16 @@
+{% load static %}
+{% load i18n %}
+
+
+<div class="Tabs-block" id="addit">
+    <div class="Product-props">
+        {% if object.parameter_set.all %}
+            {% for parameter in object.parameter_set.all %}
+                <div class="Product-prop">
+                    <strong>{{ parameter.parameter }}</strong>
+                    <span>{{ parameter.value }}</span>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>

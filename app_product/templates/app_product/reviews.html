@@ -1,0 +1,69 @@
+{% load static %}
+{% load i18n %}
+
+<div class="Tabs-block" id="reviews">
+    <header class="Section-header">
+        <h3 class="Section-title">{% trans 'Отзывы' %}: {{ reviews|length }}</h3>
+    </header>
+    <div class="Comments">
+        {% if reviews %}
+            {% for review in reviews %}
+                <div class="Comment">
+            <div class="Comment-column Comment-column_pict">
+                {% if review.user.avatar %}
+                    <div style="
+                            width: 99px;
+                            height: 99px;
+                            border-radius: 50px;
+                            background: url('{{ review.user.avatar.url }}');
+                            background-size: auto 99px;
+                            ">
+                    </div>
+                {% else %}
+                    <div class="Comment-avatar">
+                    </div>
+                {% endif %}
+            </div>
+            <div class="Comment-column">
+                <header class="Comment-header">
+                    <div>
+                        <strong class="Comment-title">{{ review.user.full_name }}</strong>
+                        <span class="Comment-date">{{ review.created }}</span>
+                    </div>
+                </header>
+                <div class="Comment-content">{{ review.text|linebreaks }}</div>
+            </div>
+        </div>
+            {% endfor %}
+        {% else %}
+        <div class="Comment-content">{% trans 'Отзывов об этом товаре ещё нет' %}</div>
+        {% endif %}
+    </div>
+    <header class="Section-header Section-header_product">
+        <h3 class="Section-title">{% trans 'Добавить отзыв' %}</h3>
+    </header>
+
+    {% if request.user.is_authenticated %}
+    <div class="Tabs-addComment">
+        <form class="form" action="{% url 'product_detail' product.pk %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ review_form.text }}
+                {% for error in review_form.text.errors %}
+                    <div class="form-error">{{ error|escape }}</div>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <button class="btn btn_muted" type="submit">{% trans 'Добавить отзыв' %}</button>
+            </div>
+        </form>
+    </div>
+    {% else %}
+        <form class="form" action="{% url 'login' %}" method="get">
+            <div class="form-group">{% trans 'Только авторизованные пользователи могут оставлять отзывы' %}</div>
+            <div class="form-group">
+                <button class="btn btn_success" type="submit">{% trans 'Войти | Зарегистрироваться' %}</button>
+            </div>
+        </form>
+    {% endif %}
+</div>
