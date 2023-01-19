@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django_mptt_admin.admin import DjangoMpttAdmin
 from app_product.models import *
+from django.utils.translation import gettext_lazy as _
 
 
 class ParameterValueInline(admin.TabularInline):
@@ -23,6 +24,29 @@ class ProductAdmin(admin.ModelAdmin):
     list_editable = ['price', 'stock', 'available', 'limited']
     save_on_top = True
     inlines = [ImageInline, ParameterValueInline]
+
+    fieldsets = (
+        (_('Информация о товаре'), {
+            'fields': ('name', 'category', 'vendor', 'manufacturer', 'price', 'stock', 'available', 'limited'),
+            'description': _('Информация о товаре')
+        }),
+        (_('Описание товара'), {
+            'fields': ('description',),
+            'description': _('<b>Вы можете использовать html-теги:</b><br><br>'
+                             '&lt;h2&gt;Заголовок 2го уровня&lt;/h2&gt;<br>'
+                             '&lt;h3&gt;Заголовок 3го уровня&lt;/h3&gt;<br>'
+                             '&lt;p&gt;Параграф текста&lt;/p&gt;<br>'
+                             '&lt;b&gt;Жирный текст&lt;/b&gt;<br>'
+                             '&lt;i&gt;Текст курсивом&lt;/i&gt;<br><br>'
+                             'Маркированный список:<br>'
+                             '&lt;ul&gt;<br>'
+                             '&lt;li&gt;пункт 1&lt;/li&gt;<br>'
+                             '&lt;li&gt;пункт 2&lt;/li&gt;<br>'
+                             '&lt;li&gt;пункт 3&lt;/li&gt;<br>'
+                             '&lt;/ul&gt;<br><br>'
+                             '<b>Ссылки и скрипты использовать нельзя!</b>')
+        }),
+    )
 
 
 class ParameterAdmin(admin.ModelAdmin):
