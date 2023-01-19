@@ -20,6 +20,7 @@ from djangoShop import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('cart/', include('app_cart.urls')),
     path('', include('app_main.urls')),
     path('', include('app_users.urls')),
     path('products/', include('app_product.urls')),

@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import DetailView
 
+from app_cart.forms import CartAddProductForm
 from app_product.models import Product
 from app_review.forms import ReviewForm
 from app_review.models import Review
@@ -19,6 +20,7 @@ class ProductDetail(DetailView):
         reviews = Review.objects.filter(product=self.get_object()).prefetch_related('user').order_by('-created')
         context['review_form'] = ReviewForm()
         context['reviews'] = reviews
+        context['cart_form'] = CartAddProductForm(initial={'quantity': 1})
         return context
 
     def post(self, request, pk):

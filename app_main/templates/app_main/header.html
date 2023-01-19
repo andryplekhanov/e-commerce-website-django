@@ -91,24 +91,23 @@
                     </ul>
                 </div>
             </nav>
-{#            {% with total_items=cart|length %}#}
+            {% with total_items=cart|length %}
             <div class="row-block">
                 <div class="CartBlock">
-                    <a class="CartBlock-block" href="#">
+                    <a class="CartBlock-block" href="{% url 'cart_detail' %}">
                         <img class="CartBlock-img" src="{% static 'assets/img/icons/cart.svg' %}" alt="cart.svg"/>
-{#                        <span class="CartBlock-amount">{{ total_items }}</span>#}
-                        <span class="CartBlock-amount">0</span>
+                        <span class="CartBlock-amount">{{ total_items }}</span>
                     </a>
                     <div class="CartBlock-block">
                         <span class="CartBlock-price">
-{#                            {% if cart.get_total_price %}#}
-{#                            {{ cart.get_total_price }} ₽#}
-{#                            {% endif %}#}
+                            {% if cart.get_total_price %}
+                            {{ cart.get_total_price }}₽
+                            {% endif %}
                         </span>
                     </div>
                 </div>
             </div>
-{#            {% endwith %}#}
+            {% endwith %}
             <div class="row-block Header-trigger">
                 <a class="menuTrigger" href="#navigate">
                     <div class="menuTrigger-content">Показать навигацию</div>
