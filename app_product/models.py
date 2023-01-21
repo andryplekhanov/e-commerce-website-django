@@ -11,13 +11,13 @@ from app_product.validators import product_image_size_validate
 from app_vendor.models import Vendor
 
 image_validator = FileExtensionValidator(
-        allowed_extensions=['png', 'jpg', 'gif'],
-        message=_('Ошибка загрузки: допускаются только файлы с расширением .jpg .gif .png')
+        allowed_extensions=['png', 'jpg', 'gif', 'svg'],
+        message=_('Ошибка загрузки: допускаются только файлы с расширением .jpg .gif .png .svg')
     )
 
 icon_validator = FileExtensionValidator(
-        allowed_extensions=['png', ],
-        message=_('Ошибка загрузки: допускаются только файлы с расширением .png')
+        allowed_extensions=['png', 'svg'],
+        message=_('Ошибка загрузки: допускаются только файлы с расширением .png .svg')
     )
 
 
@@ -67,6 +67,11 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('product_detail', args=[self.pk])
+
+    def get_clear_description(self):
+        import re
+        clean = re.compile('<.*?>')
+        return re.sub(clean, '', self.description)[:255]
 
     def __str__(self):
         return self.name

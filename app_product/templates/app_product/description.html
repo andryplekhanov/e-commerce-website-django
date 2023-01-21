@@ -1,0 +1,28 @@
+{% load static %}
+{% load i18n %}
+
+
+<div class="Tabs-block" id="description">
+    {#   autoescape - опасно. Использовать только если сайт наполняет контентом свой человек, иначе могут подсунуть вредоносный скрипт.#}
+    {% autoescape off %}
+        {{ object.description }}
+        {#  {{ object.description|linebreaks }} если используем autoescape, убираем linebreaks #}
+    {% endautoescape %}
+    <div class="clearfix"></div>
+    <div class="table">
+        <table>
+            <tr>
+                <th>{% trans 'Характеристика' %}</th>
+                <th>{% trans 'Значение' %}</th>
+            </tr>
+            {% if object.parameter_set.all %}
+                {% for parameter in object.parameter_set.all %}
+                    <tr>
+                        <td>{{ parameter.parameter }}</td>
+                        <td>{{ parameter.value }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+    </div>
+</div>

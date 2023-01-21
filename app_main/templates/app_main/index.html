@@ -1,216 +1,25 @@
 {% extends 'app_main/base.html' %}
 {% load static %}
 {% load i18n %}
-{% load thumbnail %}
 
 {% block middle %}
     <div class="Middle">
+
+{#        Блок "избранные категории"#}
         <div class="Section">
-            <div class="wrap">
-                <div class="BannersHome">
-                    {% for key, value in cats.items %}
-                    <a class="BannersHomeBlock" href="#">
-                        <div class="BannersHomeBlock-row">
-                        <div class="BannersHomeBlock-block">
-                            <strong class="BannersHomeBlock-title">{{ key.name }}</strong>
-                            <div class="BannersHomeBlock-content">{% trans 'от' %}
-                                <span class="BannersHomeBlock-price">{{ value.price__min }}₽</span>
-                            </div>
-                        </div>
-                        <div class="BannersHomeBlock-block">
-                            <div class="BannersHomeBlock-img">
-                                <img src="{{ key.image.url }}" alt="{{ key.name }}"/>
-                            </div>
-                        </div>
-                    </div>
-                    </a>
-                    {% endfor %}
-                </div>
-            </div>
+            {% include 'app_main/categories.html' %}
         </div>
+
+{#        Блок "популярные товары"#}
         <div class="Section Section_column Section_columnDesktop">
-            <div class="wrap">
-                <div class="Section-content">
-                    <header class="Section-header">
-                        <h2 class="Section-title">{% trans 'Популярные товары' %}</h2>
-                    </header>
-                    <div class="Cards">
-                        <div class="Card">
-                            <a class="Card-picture" href="#">
-                                <img src="{% static 'assets/img/content/home/card.jpg' %}" alt="card.jpg"/>
-                            </a>
-                            <div class="Card-content">
-                                <strong class="Card-title">
-                                    <a href="#">Corsair Carbide Series Arctic White Steel</a>
-                                </strong>
-                                <div class="Card-description">
-                                    <div class="Card-cost">
-                                        <span class="Card-price">$85.00</span>
-                                    </div>
-                                    <div class="Card-category">
-                                        Games / xbox
-                                    </div>
-                                    <div class="Card-hover">
-                                        <a class="Card-btn" href="#">
-                                            <img src="{% static 'assets/img/icons/card/cart.svg' %}" alt="cart.svg"/>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-{#                        <div class="Card hide_md">#}
-{#                            <a class="Card-picture" href="#">#}
-{#                                <img src="assets/img/content/home/card.jpg" alt="card.jpg"/>#}
-{#                            </a>#}
-{#                            <div class="Card-content">#}
-{#                                <strong class="Card-title">#}
-{#                                    <a href="#">Corsair Carbide Series Arctic White Steel</a>#}
-{#                                </strong>#}
-{#                                <div class="Card-description">#}
-{#                                    <div class="Card-cost">#}
-{#                                        <span class="Card-price">$85.00</span>#}
-{#                                    </div>#}
-{#                                    <div class="Card-category">#}
-{#                                        Games / xbox#}
-{#                                    </div>#}
-{#                                    <div class="Card-hover">#}
-{#                                        <a class="Card-btn" href="#">#}
-{#                                            <img src="assets/img/icons/card/cart.svg" alt="cart.svg"/>#}
-{#                                        </a>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                        <div class="Card hide_md hide_1450">#}
-{#                            <a class="Card-picture" href="#">#}
-{#                                <img src="assets/img/content/home/card.jpg" alt="card.jpg"/>#}
-{#                            </a>#}
-{#                            <div class="Card-content">#}
-{#                                <strong class="Card-title">#}
-{#                                    <a href="#">Corsair Carbide Series Arctic White Steel</a>#}
-{#                                </strong>#}
-{#                                <div class="Card-description">#}
-{#                                    <div class="Card-cost">#}
-{#                                        <span class="Card-price">$210.00</span>#}
-{#                                    </div>#}
-{#                                    <div class="Card-category">#}
-{#                                        Media / xbox#}
-{#                                    </div>#}
-{#                                    <div class="Card-hover">#}
-{#                                        <a class="Card-btn" href="#">#}
-{#                                            <img src="assets/img/icons/card/cart.svg" alt="cart.svg"/>#}
-{#                                        </a>#}
-{#                                        <a class="Card-btn" href="#">#}
-{#                                            <img src="assets/img/icons/card/change.svg" alt="change.svg"/>#}
-{#                                        </a>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-                    </div>
-                </div>
-            </div>
+            {% include 'app_main/popular.html' %}
         </div>
+
+{#        Блок "ограниченная серия"#}
         <div class="Section Section_column Section_columnRight">
             <div class="wrap">
-                <div class="Section-column">
-                    <div class="Section-columnSection Section-columnSection_mark">
-                        <div class="media media_advantage">
-                            <div class="media-image">
-                                <img src="{% static 'assets/img/icons/advantages/shipping.svg' %}" alt="shipping.svg"/>
-                            </div>
-                            <div class="media-content">
-                                <strong class="media-title">{% trans 'Доставка и возврат' %}</strong>
-                                <p class="media-text">{% trans 'Доставка по всему миру' %}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="Section-columnSection Section-columnSection_mark">
-                        <div class="media media_advantage">
-                            <div class="media-image">
-                                <img src="{% static 'assets/img/icons/advantages/moneyBack.svg' %}" alt="moneyBack.svg"/>
-                            </div>
-                            <div class="media-content">
-                                <strong class="media-title">{% trans 'Возврат средств' %}</strong>
-                                <p class="media-text">{% trans 'Гарантированные выплаты' %}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="Section-columnSection Section-columnSection_mark">
-                        <div class="media media_advantage">
-                            <div class="media-image">
-                                <img src="{% static 'assets/img/icons/advantages/support.svg' %}" alt="support.svg"/>
-                            </div>
-                            <div class="media-content">
-                                <strong class="media-title">{% trans 'Поддержка клиентов' %}</strong>
-                                <p class="media-text">{% trans 'Круглосуточно оказываем помощь' %}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="Section-columnSection Section-columnSection_mark">
-                        <div class="media media_advantage">
-                            <div class="media-image">
-                                <img src="{% static 'assets/img/icons/advantages/quality.svg' %}" alt="quality.svg"/>
-                            </div>
-                            <div class="media-content">
-                                <strong class="media-title">{% trans 'Гарантия качества' %}</strong>
-                                <p class="media-text">{% trans 'Гарантированно лучшие товары' %}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="Section-content">
-                    <div class="Slider Slider_carousel">
-                        <header class="Section-header Section-header_close">
-                            <h2 class="Section-title">{% trans 'Ограниченная серия' %}</h2>
-                            <div class="Section-control">
-                                <div class="Slider-navigate">
-                                </div>
-                            </div>
-                        </header>
-                        <div class="Slider-box Cards">
-                            {% for item in limited %}
-                            <div class="Slider-item">
-                                <div class="Slider-content">
-                                    <div class="Card">
-                                        <a class="Card-picture" href="{{ item.get_absolute_url }}">
-                                            <img src="
-                                            {% thumbnail item.images.first.image '258x172' padding=True as img %}
-                                            {{ img.url }}
-                                            {% empty %}
-                                            {% static 'assets/img/content/home/noimage.jpg' %}
-                                            {% endthumbnail %}" alt="{{ item.name }}"/>
-                                        </a>
-                                        <div class="Card-content">
-                                            <strong class="Card-title">
-                                                <a href="{{ item.get_absolute_url }}">
-                                                    {{ item.name }}
-                                                </a>
-                                            </strong>
-                                            <div class="Card-description">
-                                                <div class="Card-cost">
-                                                    <span class="Card-price">{{ item.price }} ₽</span>
-                                                </div>
-                                                <div class="Card-category">
-                                                    {% if item.category.parent %}
-                                                    {{ item.category.parent }} /
-                                                    {% endif %}
-                                                    {{ item.category.name }}
-                                                </div>
-                                                <div class="Card-hover">
-                                                    <a class="Card-btn" href="#">
-                                                        <img src="{% static 'assets/img/icons/card/cart.svg' %}" alt="cart.svg"/>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
+                {% include 'app_main/right_column.html' %}
+                {% include 'app_main/limited.html' %}
             </div>
         </div>
     </div>
