@@ -62,14 +62,14 @@
                             <form action="{% url 'cart_add' product.id %}" id="form_cart" method="post">
                                 {% csrf_token %}
                                 <div class="ProductCard-cart">
-                                    <div class="ProductCard-cartElement ProductCard-cartElement_amount">
+{#                                    <div class="ProductCard-cartElement ProductCard-cartElement_amount">#}
 {#                                        <div class="Amount Amount_product">#}
 {#                                            <button class="Amount-remove" type="button"></button>#}
 {#                                            {{ cart_form }}#}
 {#                                            <input class="Amount-input form-input" name="amount" type="text" value="1"/>#}
 {#                                            <button class="Amount-add" type="button"></button>#}
 {#                                        </div>#}
-                                    </div>
+{#                                    </div>#}
                                     <div class="ProductCard-cartElement">
                                         <button class="btn btn_primary" type="submit" id="btn-submit">
                                             <img class="btn-icon" src="{% static 'assets/img/icons/card/cart_white.svg' %}" alt="cart_white.svg"/>

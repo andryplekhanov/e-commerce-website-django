@@ -13,8 +13,8 @@
                     <li class="breadcrumbs-item">
                         <a href="{% url 'index' %}">{% trans 'Главная' %}</a>
                     </li>
-                    <li class="breadcrumbs-item breadcrumbs-item_current"
-                    ><span>{% trans 'Корзина' %}</span>
+                    <li class="breadcrumbs-item breadcrumbs-item_current">
+                        <span>{% trans 'Корзина' %}</span>
                     </li>
                 </ul>
             </div>
@@ -54,7 +54,11 @@
                                     <div class="Amount-input" style="width: 100%; box-sizing: border-box; border-radius: 0px; border: 1px solid #e0e0e0; background-color: #f9fafc; line-height: 46px;">
                                         {{ value.quantity }}
                                     </div>
+                                    {% if value.quantity < value.stock %}
                                     <a style="display: inline-block; min-width: 56px; height: 56px; line-height: 56px; border: 1px solid transparent; background-color: #ebebeb; transition: all 300ms; margin-left: 10px; text-align: center; vertical-align: middle; color: buttontext;" onmouseover="this.style.backgroundColor='#d2e7ff'; this.style.borderColor='#0063d1'" onmouseout="this.style.backgroundColor='#ebebeb'; this.style.borderColor='transparent';" href="{% url 'item_increment' value.product_id %}">+</a>
+                                    {% else %}
+                                    <a style="display: inline-block; min-width: 56px; height: 56px; line-height: 56px; border: 1px solid transparent; background-color: #fdfdfd; transition: all 300ms; margin-left: 10px; text-align: center; vertical-align: middle; color: #d7d7d7;" href="#">+</a>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -73,23 +77,13 @@
                     <strong class="Cart-title">{% trans 'Итого' %}:
                     </strong><span class="Cart-price">{{ cart_total_price }}₽</span>
                 </div>
-{#                <div class="Cart-block">#}
-{#                    {% if cart %}#}
-{#                    <button class="btn btn_success btn_lg"#}
-{#                            type="button"#}
-{#                            onclick="window.location.href = '{% url 'create_order' %}';">#}
-{#                            onclick="window.location.href = '#';">#}
-{#                        Оформить заказ#}
-{#                    </button>#}
-{#                    {% else %}#}
-{#                    <button class="btn btn_success btn_lg"#}
-{#                            type="button" disabled#}
-{#                            onclick="window.location.href = '{% url 'create_order' %}';">#}
-{#                            onclick="window.location.href = '#';">#}
-{#                        Оформить заказ#}
-{#                    </button>#}
-{#                    {% endif %}#}
-{#                </div>#}
+                <div class="Cart-block">
+                    <button class="btn btn_success btn_lg" type="button"
+                            onclick="window.location.href = '#';">
+                        {% trans 'Оформить заказ' %}
+                    </button>
+
+                </div>
             </div>
             {% endif %}
         </div>
