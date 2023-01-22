@@ -22,8 +22,12 @@ class Cart(object):
 
         id = product.id
         newItem = True
-        if str(product.id) not in self.cart.keys():
 
+        image = product.images.first()
+        if image:
+            image = str(image.image.url)
+
+        if str(product.id) not in self.cart.keys():
             self.cart[product.id] = {
                 'userid': self.request.user.id,
                 'product_id': id,
@@ -32,7 +36,7 @@ class Cart(object):
                 'price': str(product.price),
                 'description': product.get_clear_description(),
                 'url': product.get_absolute_url(),
-                'image': str(product.images.first().image.url),
+                'image': image,
                 'stock': product.stock
             }
         else:
@@ -58,7 +62,7 @@ class Cart(object):
                     'price': str(product.price),
                     'description': product.get_clear_description(),
                     'url': product.get_absolute_url(),
-                    'image': str(product.images.first().image.url),
+                    'image': image,
                     'stock': product.stock
                 }
         self.save()

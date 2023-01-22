@@ -13,10 +13,13 @@ class IndexView(TemplateView):
         categories = Category.objects.filter(parent__isnull=False)[:3]
         cats = {}
         for cat in categories:
-            cats[cat] = Product.objects.filter(category=cat).filter(available=True).only('price').aggregate(Min('price'))
+            price = Product.objects.filter(category=cat).filter(available=True).only('price').aggregate(Min('price'))
+            cats[cat] = round(float(price.get('price__min')), 2)
         context['cats'] = cats
 
-        limited = Product.objects.filter(available=True, limited=True).select_related('category').only('category', 'name', 'price')
+        limited = Product.objects\
+            .filter(available=True, limited=True)\
+            .select_related('category')\
+            .only('category', 'name', 'price')
         context['limited'] = limited
-
         return context

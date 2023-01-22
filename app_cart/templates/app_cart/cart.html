@@ -23,24 +23,33 @@
     <div class="Section">
         <div class="wrap">
             {% if not request.session.cart.items %}
-            <p>{% trans 'Ваша корзина пуста' %}</p>
-            <p><a href="{% url 'index' %}">{% trans 'Продолжить покупки' %}</a></p>
+            <div class="Cart-total">
+                <div class="Cart-block Cart-block_total">
+                    <strong class="Cart-title">{% trans 'Ваша корзина пуста' %}</strong>
+                </div>
+                <div class="Cart-block">
+                    <button class='btn btn_success btn_lg' type='button'
+                            onclick='window.location.href = "{% url 'index' %}";'>
+                        {% trans 'Продолжить покупки' %}
+                    </button>
+                </div>
+            </div>
 
             {% else %}
-            {% for key,value in request.session.cart.items %}
+            {% for key, value in request.session.cart.items %}
             <form class="form" id="cart_form" method="post" action="#">
                 <div class="Cart-product">
                     <div class="Cart-block Cart-block_row">
                         <div class="Cart-block Cart-block_pict">
                             <a class="Cart-pict" href="{{ value.url }}">
-                                <img class="Cart-img" src='{% if value.image %}{{ value.image }}{% else %}{% static "/assets/img/content/home/bigGoods.png" %}{% endif %}' alt="good's image"/>
+                                <img class="Cart-img" src='{% if value.image %}{{ value.image }}{% else %}{% static "/assets/img/content/home/noimage.jpg" %}{% endif %}' alt="good's image"/>
                             </a>
                         </div>
                         <div class="Cart-block Cart-block_info"><a class="Cart-title" href="{{ value.url }}">{{ value.name }}</a>
                             <div class="Cart-desc">{{ value.description|linebreaks }}</div>
                         </div>
                         <div class="Cart-block Cart-block_price">
-                            <div class="Cart-price" id="product-price">{{ value.price|multiply:value.quantity }}</div>
+                            <div class="Cart-price" id="product-price">{{ value.price|multiply:value.quantity|floatformat:2 }}₽</div>
                         </div>
                     </div>
                     <div class="Cart-block Cart-block_row">
@@ -51,7 +60,7 @@
                             <div class="Cart-amount">
                                 <div class="Amount">
                                     <a style="display: inline-block; min-width: 56px; height: 56px; line-height: 56px; border: 1px solid transparent; background-color: #ebebeb; transition: all 300ms; margin-right: 10px; text-align: center; vertical-align: middle; color: buttontext;" onmouseover="this.style.backgroundColor='#d2e7ff'; this.style.borderColor='#0063d1'" onmouseout="this.style.backgroundColor='#ebebeb'; this.style.borderColor='transparent';" href="{% url 'item_decrement' value.product_id %}">—</a>
-                                    <div class="Amount-input" style="width: 100%; box-sizing: border-box; border-radius: 0px; border: 1px solid #e0e0e0; background-color: #f9fafc; line-height: 46px;">
+                                    <div class="Amount-input" style="width: 100%; box-sizing: border-box; border-radius: 0; border: 1px solid #e0e0e0; background-color: #f9fafc; line-height: 46px;">
                                         {{ value.quantity }}
                                     </div>
                                     {% if value.quantity < value.stock %}
@@ -74,15 +83,18 @@
 
             <div class="Cart-total">
                 <div class="Cart-block Cart-block_total">
-                    <strong class="Cart-title">{% trans 'Итого' %}:
-                    </strong><span class="Cart-price">{{ cart_total_price }}₽</span>
+                    <strong class="Cart-title">{% trans 'Итого' %}:</strong>
+                    <span class="Cart-price">{{ cart_total_price }}₽</span>
                 </div>
                 <div class="Cart-block">
-                    <button class="btn btn_success btn_lg" type="button"
-                            onclick="window.location.href = '#';">
+                    <button class="btn btn_success btn_lg" type="button" onclick="window.location.href = '#';">
                         {% trans 'Оформить заказ' %}
                     </button>
-
+                </div>
+                <div class="Cart-block">
+                    <button class='btn btn_primary' type='button' onclick='window.location.href = "{% url 'index' %}";'>
+                        {% trans 'Продолжить покупки' %}
+                    </button>
                 </div>
             </div>
             {% endif %}

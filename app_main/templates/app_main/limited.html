@@ -27,7 +27,7 @@
                             <div class="Card-content">
                                 <strong class="Card-title">
                                     <a href="{{ item.get_absolute_url }}">
-                                        {{ item.name }}
+                                        {{ item.name|truncatechars:40 }}
                                     </a>
                                 </strong>
                                 <div class="Card-description">

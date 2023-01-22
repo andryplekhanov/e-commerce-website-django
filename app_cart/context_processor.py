@@ -1,4 +1,5 @@
 from app_cart.cart import Cart
+from decimal import Decimal
 
 
 def cart(request):
@@ -8,4 +9,5 @@ def cart(request):
     for key, value in request.session['cart'].items():
         total_bill += (float(value['price']) * value['quantity'])
         total_items += value['quantity']
-    return {'cart_total_price': total_bill, 'cart_total_items': total_items}
+    return {'cart_total_price': Decimal.from_float(total_bill).quantize(Decimal("1.00")),
+            'cart_total_items': total_items}

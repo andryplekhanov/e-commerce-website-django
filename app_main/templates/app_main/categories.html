@@ -3,18 +3,18 @@
 
 <div class="wrap">
     <div class="BannersHome">
-        {% for key, value in cats.items %}
+        {% for category, price in cats.items %}
             <a class="BannersHomeBlock" href="#">
                 <div class="BannersHomeBlock-row">
                     <div class="BannersHomeBlock-block">
-                        <strong class="BannersHomeBlock-title">{{ key.name }}</strong>
+                        <strong class="BannersHomeBlock-title">{{ category.name }}</strong>
                         <div class="BannersHomeBlock-content">{% trans 'от' %}
-                            <span class="BannersHomeBlock-price">{{ value.price__min }} ₽</span>
+                            <span class="BannersHomeBlock-price">{{ price }} ₽</span>
                         </div>
                     </div>
                     <div class="BannersHomeBlock-block">
                         <div class="BannersHomeBlock-img">
-                            <img src="{{ key.image.url }}" alt="{{ key.name }}"/>
+                            <img src="{{ category.image.url }}" alt="{{ category.name }}"/>
                         </div>
                     </div>
                 </div>
