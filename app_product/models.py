@@ -46,6 +46,11 @@ class Category(MPTTModel):
     def __str__(self):
         return self.name
 
+    def get_min(self):
+        sub_categories = self.get_descendants(include_self=True)
+        price = Product.objects.values('price').filter(category__in=sub_categories).filter(available=True).aggregate(Min('price'))
+        return round(float(price['price__min']), 2)
+
 
 class Product(models.Model):
     category = TreeForeignKey('Category', on_delete=models.PROTECT, related_name='category', verbose_name=_('категория'), db_index=True)

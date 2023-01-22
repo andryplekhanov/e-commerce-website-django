@@ -80,11 +80,12 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
 
                 'app_cart.context_processor.cart',
+                'app_settings.context_proccessors.load_settings',
             ],
         },
     },
 ]
-
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
 WSGI_APPLICATION = 'djangoShop.wsgi.application'
 
 

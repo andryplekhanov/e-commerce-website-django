@@ -9,14 +9,6 @@ class IndexView(TemplateView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # TODO категории задаются в настройках
-        categories = Category.objects.filter(parent__isnull=False)[:3]
-        cats = {}
-        for cat in categories:
-            price = Product.objects.filter(category=cat).filter(available=True).only('price').aggregate(Min('price'))
-            cats[cat] = round(float(price.get('price__min')), 2)
-        context['cats'] = cats
-
         limited = Product.objects\
             .filter(available=True, limited=True)\
             .select_related('category')\
