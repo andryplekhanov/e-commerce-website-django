@@ -81,6 +81,7 @@ TEMPLATES = [
 
                 'app_cart.context_processor.cart',
                 'app_settings.context_proccessors.load_settings',
+                'app_product.context_proccessors.load_menu',
             ],
         },
     },
