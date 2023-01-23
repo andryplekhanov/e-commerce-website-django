@@ -101,3 +101,9 @@ class Cart(object):
 
         self.session[settings.CART_SESSION_ID] = {}
         self.session.modified = True
+
+    def get_total_price(self):
+        """ Подсчет итоговой суммы """
+
+        total_price = sum(float(item['price']) * item['quantity'] for item in self.cart.values())
+        return Decimal.from_float(total_price).quantize(Decimal("1.00"))
