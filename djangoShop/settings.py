@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'sorl.thumbnail',
+    'mptt',
+    'django_mptt_admin',
 
     'app_main.apps.AppMainConfig',
     'app_cart.apps.AppCartConfig',
@@ -49,9 +51,6 @@ INSTALLED_APPS = [
     'app_review.apps.AppReviewConfig',
     'app_settings.apps.AppSettingsConfig',
     'app_vendor.apps.AppVendorConfig',
-
-    'mptt',
-    'django_mptt_admin',
 
 ]
 
