@@ -57,6 +57,10 @@ class Signup(CreateView):
         return self.form_invalid(form)
 
 
+class SignupWithOrder(Signup):
+    success_url = reverse_lazy('create_order')
+
+
 class LogInView(LoginView):
     template_name = 'app_users/login.html'
     authentication_form = UserLoginForm
