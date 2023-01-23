@@ -1,0 +1,1 @@
+[{"model": "app_settings.sitesettings", "pk": 3, "fields": {"express_delivery_price": "1000.00", "edge_for_free_delivery": "10000.00", "common_delivery_price": "300.00", "root_category": 12, "quantity_popular": 8, "time_cache_product": 1, "category_main_page": [4, 3, 2]}}]
