@@ -14,7 +14,7 @@ class SiteSettings(SingletonModel):
                                       verbose_name=_('корневая категория каталога'), related_name='root_category',
                                       blank=True, null=True)
     category_main_page = models.ManyToManyField('app_product.Category',
-                                                verbose_name=_('категории для показа на главной странице (не больше 3)'))
+                                                verbose_name=_('категории для показа на главной странице (максимум 3)'))
     quantity_popular = models.PositiveIntegerField(verbose_name=_('количество популярных товаров на главной странице'),
                                                    default=8)
     time_cache_product = models.PositiveIntegerField(verbose_name=_('через сколько дней кэшировать данные о продукте'),
