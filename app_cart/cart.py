@@ -1,7 +1,9 @@
 from decimal import Decimal
+
 from django.conf import settings
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
+
+from app_product.models import Product
 
 
 class Cart(object):
@@ -49,13 +51,13 @@ class Cart(object):
                         self.save()
                         break
                     else:
-                        value['quantity'] = value['quantity'] + 1
+                        value['quantity'] += 1
                         newItem = False
                         self.save()
                         break
             if newItem == True:
                 self.cart[product.id] = {
-                    'userid': self.request,
+                    'userid': self.request.user.id,
                     'product_id': product.id,
                     'name': product.name,
                     'quantity': 1,
@@ -88,7 +90,7 @@ class Cart(object):
         for key, value in self.cart.items():
             if key == str(product.id):
 
-                value['quantity'] = value['quantity'] - 1
+                value['quantity'] -= 1
                 if (value['quantity'] < 1):
                     return redirect('cart_detail')
                 self.save()
@@ -97,7 +99,7 @@ class Cart(object):
                 print("Something Wrong")
 
     def clear(self):
-        """ Пустая корзина """
+        """ Опустошение корзины """
 
         self.session[settings.CART_SESSION_ID] = {}
         self.session.modified = True
@@ -107,3 +109,17 @@ class Cart(object):
 
         total_price = sum(float(item['price']) * item['quantity'] for item in self.cart.values())
         return Decimal.from_float(total_price).quantize(Decimal("1.00"))
+
+    def __iter__(self):
+        """ Перебор элементов в корзине и получение продуктов из базы данных. """
+
+        product_ids = self.cart.keys()
+        # получение объектов product и добавление их в корзину
+        products = Product.objects.filter(id__in=product_ids)
+        for product in products:
+            self.cart[str(product.id)]['product'] = product
+
+        for item in self.cart.values():
+            item['price'] = float(item['price'])
+            item['total_price'] = Decimal.from_float(item['price'] * item['quantity']).quantize(Decimal("1.00"))
+            yield item
