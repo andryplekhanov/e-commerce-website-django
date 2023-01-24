@@ -1,6 +1,7 @@
 from django.contrib import admin
 from app_orders.models import OrderItem, Order
 from django.utils.translation import gettext_lazy as _
+from decimal import Decimal
 
 
 class OrderItemInline(admin.TabularInline):
@@ -9,11 +10,17 @@ class OrderItemInline(admin.TabularInline):
 
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'delivery_type', 'delivery_price', 'city', 'paid', 'created', 'updated', 'payment_type']
+    list_display = ['id', 'user', 'delivery_type', 'delivery_price', 'get_total_cost', 'paid', 'payment_type', 'city', 'created', 'updated']
     list_filter = ['paid', 'created', 'updated']
     search_fields = ['id', 'user__email', 'user__full_name', 'city', 'address']
     save_on_top = True
     inlines = [OrderItemInline]
+
+    def get_total_cost(self, obj):
+        total_cost = float(sum(item.get_cost() for item in obj.items.all()) + obj.delivery_price)
+        return Decimal.from_float(total_cost).quantize(Decimal("1.00"))
+
+    get_total_cost.short_description = _('итоговая стоимость')
 
     fieldsets = (
         (_('Информация о пользователе'), {
