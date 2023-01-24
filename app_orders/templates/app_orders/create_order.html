@@ -1,9 +1,9 @@
 {% extends "app_main/base.html" %}
 {% load static %}
 {% load cart_tag %}
+{% load i18n %}
 
 {% block middle %}
-
 <div class="Middle Middle_top">
     <div class="modal fade" tabindex="-1" role="dialog" id="modal">
         <div class="modal-dialog" role="document">
@@ -13,13 +13,13 @@
     <div class="Middle-top">
         <div class="wrap">
             <div class="Middle-header">
-                <h1 class="Middle-title">Оформление заказа</h1>
+                <h1 class="Middle-title">{% trans 'Оформление заказа' %}</h1>
                 <ul class="breadcrumbs Middle-breadcrumbs">
                     <li class="breadcrumbs-item">
-                        <a href="{% url 'index' %}">главная</a>
+                        <a href="{% url 'index' %}">{% trans 'главная' %}</a>
                     </li>
                     <li class="breadcrumbs-item breadcrumbs-item_current">
-                        <span>Оформление заказа</span>
+                        <span>{% trans 'Оформление заказа' %}</span>
                     </li>
                 </ul>
             </div>
@@ -30,21 +30,29 @@
             <div class="Section-column">
                 <div class="Section-columnSection">
                     <header class="Section-header">
-                        <strong class="Section-title">Прогресс заполнения</strong>
+                        <strong class="Section-title">{% trans 'Прогресс заполнения' %}</strong>
                     </header>
                     <div class="Section-columnContent">
                         <ul class="menu menu_vt Order-navigate">
                             <li class="menu-item_ACTIVE menu-item">
-                                <a class="menu-link" href="#step1">Шаг 1. Параметры пользователя</a>
+                                <a class="menu-link" href="#step1">
+                                    {% trans 'Шаг' %} 1. {% trans 'Параметры пользователя' %}
+                                </a>
                             </li>
                             <li class="menu-item">
-                                <a class="menu-link" href="#step2">Шаг 2. Способ доставки</a>
+                                <a class="menu-link" href="#step2">
+                                    {% trans 'Шаг' %} 2. {% trans 'Способ доставки' %}
+                                </a>
                             </li>
                             <li class="menu-item">
-                                <a class="menu-link" href="#step3">Шаг 3. Способ оплаты</a>
+                                <a class="menu-link" href="#step3">
+                                    {% trans 'Шаг' %} 3. {% trans 'Способ оплаты' %}
+                                </a>
                             </li>
                             <li class="menu-item">
-                                <a class="menu-link" href="#step4">Шаг 4. Подтверждение заказа</a>
+                                <a class="menu-link" href="#step4">
+                                    {% trans 'Шаг' %} 4. {% trans 'Подтверждение заказа' %}
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -53,7 +61,7 @@
             <div class="Section-content">
                 <div class="Order-block Order-block_OPEN" id="step1">
                     <header class="Section-header Section-header_sm">
-                        <h2 class="Section-title">Шаг 1. Параметры пользователя</h2>
+                        <h2 class="Section-title">{% trans 'Шаг' %} 1. {% trans 'Параметры пользователя' %}</h2>
                     </header>
                     <form class="form" action="{% url 'signup_order' %}" method="post">
                         {% csrf_token %}
@@ -61,7 +69,7 @@
                             <div class="row-block">
                                 <div class="form-group">
                                     <label class="form-label" for="{{ form_reg.full_name.id_for_full_name }}">
-                                        ФИО
+                                        {% trans 'ФИО' %}
                                     </label>
                                     {{ form_reg.full_name }}
                                     {% for error in form_reg.full_name.errors %}
@@ -70,7 +78,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="{{ form_reg.phone_number.id_for_phone_number }}">
-                                        Телефон
+                                        {% trans 'Телефон' %}
                                     </label>
                                     {{ form_reg.phone_number }}
                                     {% for error in form_reg.phone_number.errors %}
@@ -89,7 +97,7 @@
                             <div class="row-block">
                                 <div class="form-group">
                                     <label class="form-label" for="{{ form_reg.password1.id_for_password1 }}">
-                                        Пароль
+                                        {% trans 'Пароль' %}
                                     </label>
                                     {{ form_reg.password1 }}
                                     {% for error in form_reg.password2.errors %}
@@ -98,7 +106,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="{{ form_reg.password2.id_for_password2 }}">
-                                        Подтверждение пароля
+                                        {% trans 'Подтверждение пароля' %}
                                     </label>
                                     {{ form_reg.password2 }}
                                     {% for error in form_reg.password2.errors %}
@@ -106,8 +114,10 @@
                                     {% endfor %}
                                 </div>
                                 <div class="form-group">
-                                    <button id="login-btn" class="btn btn-primary btn_muted Order-btnReg" type="button" name="button" onclick='window.location.href = "{% url 'login' %}";'>
-                                        Я уже зарегистрирован
+                                    <button id="login-btn" class="btn btn-primary btn_muted Order-btnReg"
+                                            type="button" name="button"
+                                            onclick='window.location.href = "{% url 'login' %}";'>
+                                        {% trans 'Я уже зарегистрирован' %}
                                     </button>
                                 </div>
                             </div>
@@ -115,11 +125,11 @@
                         </div>
                         {% if request.user.is_authenticated %}
                         <div class="Order-footer">
-                            <a class="btn btn_success Order-next" href="#step2">Дальше</a>
+                            <a class="btn btn_success Order-next" href="#step2">{% trans 'Дальше' %}</a>
                         </div>
                         {% else %}
                         <div class="Order-footer">
-                            <button class="btn btn_success" type="submit">Зарегистрироваться</button>
+                            <button class="btn btn_success" type="submit">{% trans 'Зарегистрироваться' %}</button>
                         </div>
                         {% endif %}
                     </form>
@@ -128,7 +138,7 @@
                     {% csrf_token %}
                     <div class="Order-block" id="step2">
                         <header class="Section-header Section-header_sm">
-                            <h2 class="Section-title">Шаг 2. Способ доставки</h2>
+                            <h2 class="Section-title">{% trans 'Шаг' %} 2. {% trans 'Способ доставки' %}</h2>
                         </header>
                         <div class="form-group">
                             {% for type in form.delivery_type %}
@@ -160,12 +170,12 @@
                             {% endfor %}
                         </div>
                         <div class="Order-footer">
-                            <a class="btn btn_success Order-next" href="#step3">Дальше</a>
+                            <a class="btn btn_success Order-next" href="#step3">{% trans 'Дальше' %}</a>
                         </div>
                     </div>
                     <div class="Order-block" id="step3">
                         <header class="Section-header Section-header_sm">
-                            <h2 class="Section-title">Шаг 3. Способ оплаты</h2>
+                            <h2 class="Section-title">{% trans 'Шаг' %} 3. {% trans 'Способ оплаты' %}</h2>
                         </header>
                         <div class="form-group">
                             {% for type in form.payment_type %}
@@ -180,7 +190,7 @@
                         </div>
                         <div class="form-group">
                             <button id="generate_btn" class="btn btn_success btn_disabled" type="button">
-                                Сгенерировать
+                                {% trans 'Сгенерировать' %}
                             </button>
                         </div>
                         <div class="form-group">
@@ -193,12 +203,12 @@
                             {% endfor %}
                         </div>
                         <div class="Order-footer">
-                            <a class="btn btn_success Order-next" href="#step4">Дальше</a>
+                            <a class="btn btn_success Order-next" href="#step4">{% trans 'Дальше' %}</a>
                         </div>
                     </div>
                     <div class="Order-block" id="step4">
                         <header class="Section-header Section-header_sm">
-                            <h2 class="Section-title">Шаг 4. Подтверждение заказа</h2>
+                            <h2 class="Section-title">{% trans 'Шаг' %} 4. {% trans 'Подтверждение заказа' %}</h2>
                         </header>
                         <!--+div.Order.-confirmation-->
                         <div class="Order-infoBlock">
@@ -207,14 +217,14 @@
                                     <div class="row-block">
                                         <div class="Order-info">
                                             <div class="Order-infoType">
-                                                ФИО:
+                                                {% trans 'ФИО' %}:
                                             </div>
                                             <div class="Order-infoContent">
                                                 {{ request.user.full_name }}
                                             </div>
                                         </div>
                                         <div class="Order-info">
-                                            <div class="Order-infoType">Телефон:</div>
+                                            <div class="Order-infoType">{% trans 'Телефон' %}:</div>
                                             <div class="Order-infoContent">{{ request.user.phone_number }} </div>
                                         </div>
                                         <div class="Order-info">
@@ -224,27 +234,27 @@
                                     </div>
                                     <div class="row-block">
                                         <div class="Order-info Order-info_delivery">
-                                            <div class="Order-infoType">Тип доставки:</div>
+                                            <div class="Order-infoType">{% trans 'Тип доставки' %}:</div>
                                             <div class="Order-infoContent" id="info_delivery">
-{#                                                генерируется в скриптах: строка 884#}
+{#                                                значение генерируется в скриптах: строка 888   #}
                                             </div>
                                         </div>
                                         <div class="Order-info">
-                                            <div class="Order-infoType">Город:</div>
+                                            <div class="Order-infoType">{% trans 'Город' %}:</div>
                                             <div class="Order-infoContent" id="id_info_city">
-{#                                                генерируется в скриптах: строка 884#}
+{#                                                значение генерируется в скриптах: строка 888   #}
                                             </div>
                                         </div>
                                         <div class="Order-info">
-                                            <div class="Order-infoType">Адрес:</div>
+                                            <div class="Order-infoType">{% trans 'Адрес' %}:</div>
                                             <div class="Order-infoContent" id="id_info_address">
-{#                                                генерируется в скриптах: строка 884#}
+{#                                                значение генерируется в скриптах: строка 888   #}
                                             </div>
                                         </div>
                                         <div class="Order-info Order-info_pay">
-                                            <div class="Order-infoType">Оплата:</div>
+                                            <div class="Order-infoType">{% trans 'Оплата' %}:</div>
                                             <div class="Order-infoContent" id="info_payment">
-{#                                                генерируется в скриптах: строка 884#}
+{#                                                значение генерируется в скриптах: строка 888   #}
                                             </div>
                                         </div>
                                     </div>
@@ -256,8 +266,7 @@
                                     <div class="Cart-block Cart-block_row">
                                         <div class="Cart-block Cart-block_pict">
                                             <a class="Cart-pict" href="{{ value.url }}">
-                                            <img class="Cart-img"
-                                                 src='{% if value.image %}{{ value.image }}{% else %}{% static "/assets/img/content/home/noimage.jpg" %}{% endif %}' alt="изображение товара"/>
+                                                <img class="Cart-img" src='{% if value.image %}{{ value.image }}{% else %}{% static "/assets/img/content/home/noimage.jpg" %}{% endif %}' alt="изображение товара"/>
                                             </a>
                                         </div>
                                         <div class="Cart-block Cart-block_info">
@@ -273,21 +282,29 @@
                                         </div>
                                     </div>
                                     <div class="Cart-block Cart-block_row">
-                                        <div class="Cart-block Cart-block_amount">{{ value.quantity }} шт.</div>
+                                        <div class="Cart-block Cart-block_amount">
+                                            {{ value.quantity }} {% trans 'шт' %}.
+                                        </div>
                                     </div>
                                 </div>
                                 {% endfor %}
                                 <div class="Cart-total">
                                     <div class="Cart-block Cart-block_total">
-{#                                        <div class="Cart-block Cart-block_delivery" id="block_delivery">#}
-{#                                            Доставка: <span id="delivery"></span> ₽#}
-{#                                        </div>#}
-                                        <strong class="Cart-title">Итого:</strong>
-                                        <span class="Cart-price" id="total_value">{{ total_cost }}₽</span>
+                                        <div class="Cart-block Cart-block_delivery" id="block_delivery">
+                                            {% trans 'Доставка' %}:
+                                            <span id="delivery">
+{#                                            значение генерируется в скриптах: строка 888   #}
+                                            </span> ₽
+                                        </div>
+                                        <strong class="Cart-title">{% trans 'Итого' %}:</strong>
+                                        <span class="Cart-price" id="total_value">
+                                            {{ total_cost }}
+{#                                            значение генерируется в скриптах: строка 888#}
+                                        </span> ₽
                                     </div>
                                     <div class="Cart-block">
                                         <button class="btn btn_primary btn_lg" type="submit">
-                                            Подтвердить заказ и оплатить
+                                            {% trans 'Подтвердить заказ и оплатить' %}
                                         </button>
                                     </div>
                                 </div>

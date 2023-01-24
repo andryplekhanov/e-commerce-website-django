@@ -87,7 +87,7 @@
                     <span class="Cart-price">{{ cart_total_price }}₽</span>
                 </div>
                 <div class="Cart-block">
-                    <button class="btn btn_success btn_lg" type="button" onclick="window.location.href = '#';">
+                    <button class="btn btn_success btn_lg" type="button" onclick="window.location.href = '{% url 'order_create' %}';">
                         {% trans 'Оформить заказ' %}
                     </button>
                 </div>
