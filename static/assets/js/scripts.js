@@ -882,6 +882,37 @@ var Categories = function(){
     };
 };
 Categories().init();
+
+// Функция для отображения заполненной формы заказа перед отправкой её на сервер.
+//         Срабатывает при нажатии кнопки "ДАЛЕЕ" при переходе к шагу4
+$("a[href='#step4']").click(function (e) {
+    var cityValue = $("#id_city").val();
+    var addressValue = $("#id_address").val();
+    var deliveryValue = $("input[name=delivery_type]:checked").closest('label').text();
+    var paymentValue = $("input[name=payment_type]:checked").closest('label').text();
+
+    $("#id_info_city").html(cityValue);
+    $("#id_info_address").html(addressValue);
+    $('#info_delivery').html(deliveryValue)
+    $('#info_payment').html(paymentValue)
+
+    var delivery_price_text = $("#info_delivery").text();
+    if (delivery_price_text.includes(',')) {
+        delivery_price_text = delivery_price_text.replace(',', '.');
+    }
+    var delivery_price  = parseFloat(delivery_price_text.match(/[0-9]*[.,][0-9]+/));
+    if (isNaN(delivery_price)) {
+        delivery_price = 0;
+    }
+    $('#delivery').html(delivery_price);
+
+    var total_price_text = $("#total_value").text();
+    if (total_price_text.includes(',')) {
+        total_price_text = total_price_text.replace(',', '.');
+    }
+    var total_price_num  = parseFloat(total_price_text);
+    $('#total_value').text(total_price_num + delivery_price);
+});
 //ENDion.js
 //END
 
