@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from app_product.models import Product
 from django.contrib.auth.decorators import login_required
@@ -8,7 +9,7 @@ def cart_add(request, pk):
     cart = Cart(request)
     product = Product.objects.get(id=pk)
     cart.add(product=product)
-    return redirect("cart_detail")
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def item_clear(request, pk):
