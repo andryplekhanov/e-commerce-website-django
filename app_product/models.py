@@ -8,6 +8,7 @@ from mptt.models import MPTTModel
 from django.utils.translation import gettext_lazy as _
 
 from app_product.validators import product_image_size_validate
+from app_settings.models import SiteSettings
 from app_vendor.models import Vendor
 
 image_validator = FileExtensionValidator(
@@ -69,6 +70,23 @@ class Product(models.Model):
         ordering = ('price',)
         verbose_name = _('продукт')
         verbose_name_plural = _('продукты')
+
+    @property
+    def in_stock(self):
+        return self.stock > 0
+
+    @property
+    def total_sale(self):
+        return sum(item.quantity for item in self.order_items.all())
+
+    @property
+    def total_review(self):
+        return len(self.review.all())
+
+    @property
+    def free_delivery(self):
+        settings = SiteSettings.load()
+        return self.price > settings.edge_for_free_delivery
 
     def get_absolute_url(self):
         return reverse('product_detail', args=[self.pk])
