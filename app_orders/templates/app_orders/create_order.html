@@ -188,20 +188,20 @@
                             </div>
                             {% endfor %}
                         </div>
-                        <div class="form-group">
-                            <button id="generate_btn" class="btn btn_success btn_disabled" type="button">
-                                {% trans 'Сгенерировать' %}
-                            </button>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="{{ form.card_number.id_for_card_number }}">
-                                {{ form.card_number.label }}
-                            </label>
-                            {{ form.card_number }}
-                            {% for error in form.card_number.errors %}
-                                <div class="form-error">{{ error|escape }}</div>
-                            {% endfor %}
-                        </div>
+{#                        <div class="form-group">#}
+{#                            <button id="generate_btn" class="btn btn_success btn_disabled" type="button">#}
+{#                                {% trans 'Сгенерировать' %}#}
+{#                            </button>#}
+{#                        </div>#}
+{#                        <div class="form-group">#}
+{#                            <label class="form-label" for="{{ form.card_number.id_for_card_number }}">#}
+{#                                {{ form.card_number.label }}#}
+{#                            </label>#}
+{#                            {{ form.card_number }}#}
+{#                            {% for error in form.card_number.errors %}#}
+{#                                <div class="form-error">{{ error|escape }}</div>#}
+{#                            {% endfor %}#}
+{#                        </div>#}
                         <div class="Order-footer">
                             <a class="btn btn_success Order-next" href="#step4">{% trans 'Дальше' %}</a>
                         </div>

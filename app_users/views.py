@@ -17,7 +17,7 @@ AUTH_MENU = [
     {'title': _('Личный кабинет'), 'url_name': 'profile'},
     {'title': _('Редактировать профиль'), 'url_name': 'edit_profile'},
     {'title': _('История заказов'), 'url_name': 'orders_history'},
-    {'title': _('История просмотров'), 'url_name': 'index'},
+    # {'title': _('История просмотров'), 'url_name': 'index'},
 ]
 NOT_AUTH_MENU = [
     {'title': _('Вход'), 'url_name': 'login'},

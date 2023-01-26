@@ -28,7 +28,7 @@ class OrderAdmin(admin.ModelAdmin):
             'description': _('Информация о пользователе')
         }),
         (_('Платёжная информация'), {
-            'fields': ('payment_type', 'card_number', 'status', 'payment_code', 'paid'),
+            'fields': ('payment_type', 'status', 'payment_code', 'paid'),
             'description': _('Платёжная информация')
         }),
         (_('Информация о доставке'), {

@@ -18,15 +18,10 @@ class OrderCreateForm(forms.ModelForm):
                                'data-validate': 'require',
                                'autocomplete': 'city'
                            }))
-    card_number = forms.CharField(min_length=8, max_length=9, required=True, label=_('Номер карты'),
-                                  widget=forms.TextInput(attrs={
-                                      'class': 'form-input',
-                                      'data-validate': 'requireCard'
-                                  }))
 
     class Meta:
         model = Order
-        fields = ['address', 'city', 'delivery_type', 'payment_type', 'card_number']
+        fields = ['address', 'city', 'delivery_type', 'payment_type']
         widgets = {
             'delivery_type': forms.RadioSelect,
             'payment_type': forms.RadioSelect

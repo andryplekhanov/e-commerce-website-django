@@ -29,8 +29,6 @@ class Order(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('дата создания'))
     updated = models.DateTimeField(auto_now=True, verbose_name=_('дата изменения'))
     paid = models.BooleanField(default=False, verbose_name=_('оплачен'))
-    card_number = models.PositiveIntegerField(validators=[MinValueValidator(10000000), MaxValueValidator(99999999)],
-                                              verbose_name=_('номер карты'))
     status = models.CharField(max_length=150, verbose_name=_('статус'), blank=True, null=True)
     payment_code = models.IntegerField(default=0, verbose_name=_('код оплаты'))
 
