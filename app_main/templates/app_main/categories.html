@@ -4,7 +4,7 @@
 <div class="wrap">
     <div class="BannersHome">
         {% for category in site_settings.category_main_page.all|slice:":3" %}
-            <a class="BannersHomeBlock" href="#">
+            <a class="BannersHomeBlock" href="{% url 'catalog_for_category' category.slug %}">
                 <div class="BannersHomeBlock-row">
                     <div class="BannersHomeBlock-block">
                         <strong class="BannersHomeBlock-title">{{ category.name }}</strong>
