@@ -18,8 +18,8 @@
                             <label class="form-label" for="{{ form.avatar.id_for_avatar }}">
                                 {% trans 'Аватар' %}
                             </label>
-                            <div class="Profile-avatar Profile-avatar_noimg">
-                                <div class="Profile-img">
+                            <div class="Profile-avatar">
+                                <div class="Profile-img" style="position: absolute">
                                     {% if user.avatar %}
                                         <img src="{{ user.avatar.url }}" alt="profile_image"/>
                                     {% else %}
@@ -37,7 +37,7 @@
                                 {% endif %}
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group form-name">
                             <label class="form-label" for="{{ form.full_name.id_for_full_name }}">
                                 {% trans 'ФИО' %}
                             </label>
@@ -107,4 +107,28 @@
             </form>
         </div>
     </div>
+
+    <style>
+        #avatar-clear_id {
+            position: absolute;
+            top: 300px;
+            left: 255px;
+        }
+
+        .Profile-avatar label[for=avatar-clear_id] {
+            position: absolute;
+            top: 296px;
+            left: 300px;
+            color: #71747a;
+        }
+
+        .Profile-avatar a {
+            display: none;
+        }
+
+        .Section-content .Profile-avatar {
+            color: transparent;
+        }
+    </style>
+
 {% endblock %}
