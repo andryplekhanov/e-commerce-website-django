@@ -8,6 +8,7 @@ from mptt.models import MPTTModel
 from django.utils.translation import gettext_lazy as _
 
 from app_product.validators import product_image_size_validate
+from app_settings.models import SiteSettings
 from app_vendor.models import Vendor
 
 image_validator = FileExtensionValidator(
@@ -46,6 +47,11 @@ class Category(MPTTModel):
     def __str__(self):
         return self.name
 
+    def get_min(self):
+        sub_categories = self.get_descendants(include_self=True)
+        price = Product.objects.values('price').filter(category__in=sub_categories).filter(available=True).aggregate(Min('price'))
+        return round(float(price['price__min']), 2)
+
 
 class Product(models.Model):
     category = TreeForeignKey('Category', on_delete=models.PROTECT, related_name='category', verbose_name=_('категория'), db_index=True)
@@ -64,6 +70,23 @@ class Product(models.Model):
         ordering = ('price',)
         verbose_name = _('продукт')
         verbose_name_plural = _('продукты')
+
+    @property
+    def in_stock(self):
+        return self.stock > 0
+
+    @property
+    def total_sale(self):
+        return sum(item.quantity for item in self.order_items.all())
+
+    @property
+    def total_review(self):
+        return len(self.review.all())
+
+    @property
+    def free_delivery(self):
+        settings = SiteSettings.load()
+        return self.price > settings.edge_for_free_delivery
 
     def get_absolute_url(self):
         return reverse('product_detail', args=[self.pk])

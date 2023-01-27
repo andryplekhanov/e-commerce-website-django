@@ -59,24 +59,45 @@
                                 {{ object.get_clear_description|linebreaks }}
                                 <a href="#description">{% trans 'Полное описание' %} >>></a>
                             </div>
-{#                            <form action="{% url 'cart_add' product.id %}" id="form_cart" method="post">#}
-                            <form action="#" id="form_cart" method="post">
+                            <form action="{% url 'cart_add' product.id %}" id="form_cart" method="post">
                                 {% csrf_token %}
                                 <div class="ProductCard-cart">
-                                    <div class="ProductCard-cartElement ProductCard-cartElement_amount">
-                                        <div class="Amount Amount_product">
-                                            <button class="Amount-remove" type="button"></button>
+{#                                    <div class="ProductCard-cartElement ProductCard-cartElement_amount">#}
+{#                                        <div class="Amount Amount_product">#}
+{#                                            <button class="Amount-remove" type="button"></button>#}
 {#                                            {{ cart_form }}#}
-                                            <input class="Amount-input form-input" name="amount" type="text" value="1"/>
-                                            <button class="Amount-add" type="button"></button>
+{#                                            <input class="Amount-input form-input" name="amount" type="text" value="1"/>#}
+{#                                            <button class="Amount-add" type="button"></button>#}
+{#                                        </div>#}
+{#                                    </div>#}
+                                    {% if object.available %}
+                                        {% if is_product_in_cart %}
+                                            <div class="ProductCard-cartElement">
+                                                <div class="ProductCard-price">
+                                                    {% trans 'Товар уже в корзине' %}.
+                                                </div><br><br>
+                                                <button class="btn btn_primary" type="button" id="btn-submit" onclick='window.location.href = "{% url 'cart_detail' %}";'>
+                                                    <img class="btn-icon" src="{% static 'assets/img/icons/card/cart_white.svg' %}" alt="cart_white.svg"/>
+                                                    <span class="btn-content">{% trans 'Перейти в корзину' %}</span>
+                                                </button>
+                                            </div>
+                                        {% else %}
+                                            <div class="ProductCard-cartElement">
+                                                <button class="btn btn_primary" type="submit" id="btn-submit">
+                                                    <img class="btn-icon" src="{% static 'assets/img/icons/card/cart_white.svg' %}" alt="cart_white.svg"/>
+                                                    <span class="btn-content">{% trans 'Добавить в корзину' %}</span>
+                                                </button>
+                                            </div>
+                                        {% endif %}
+                                    {% else %}
+                                    <div class="ProductCard-info">
+                                        <div class="ProductCard-cost">
+                                            <div class="ProductCard-price">
+                                                {% trans 'К сожалению, товар не доступен' %}.
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="ProductCard-cartElement">
-                                        <button class="btn btn_primary" type="submit" id="btn-submit">
-                                            <img class="btn-icon" src="{% static 'assets/img/icons/card/cart_white.svg' %}" alt="cart_white.svg"/>
-                                            <span class="btn-content">{% trans 'Добавить в корзину' %}</span>
-                                        </button>
-                                    </div>
+                                    {% endif %}
                                 </div>
                             </form>
                             <div class="ProductCard-footer">

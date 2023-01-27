@@ -27,7 +27,7 @@
                             <div class="Card-content">
                                 <strong class="Card-title">
                                     <a href="{{ item.get_absolute_url }}">
-                                        {{ item.name }}
+                                        {{ item.name|truncatechars:40 }}
                                     </a>
                                 </strong>
                                 <div class="Card-description">
@@ -41,7 +41,7 @@
                                         {{ item.category.name }}
                                     </div>
                                     <div class="Card-hover">
-                                        <a class="Card-btn" href="#">
+                                        <a class="Card-btn" href="{% url 'cart_add' item.id %}">
                                             <img src="{% static 'assets/img/icons/card/cart.svg' %}" alt="cart.svg"/>
                                         </a>
                                     </div>

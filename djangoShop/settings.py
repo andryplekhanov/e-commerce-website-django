@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'sorl.thumbnail',
+    'mptt',
+    'django_mptt_admin',
 
     'app_main.apps.AppMainConfig',
     'app_cart.apps.AppCartConfig',
@@ -49,9 +51,6 @@ INSTALLED_APPS = [
     'app_review.apps.AppReviewConfig',
     'app_settings.apps.AppSettingsConfig',
     'app_vendor.apps.AppVendorConfig',
-
-    'mptt',
-    'django_mptt_admin',
 
 ]
 
@@ -78,11 +77,15 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'app_cart.context_processor.cart',
+                'app_settings.context_proccessors.load_settings',
+                'app_product.context_proccessors.load_menu',
             ],
         },
     },
 ]
-
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
 WSGI_APPLICATION = 'djangoShop.wsgi.application'
 
 
@@ -141,6 +144,10 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
+
+FIXTURE_DIRS = (
+    os.path.join(BASE_DIR, 'fixtures'),
+)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/'

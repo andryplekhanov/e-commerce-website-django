@@ -16,8 +16,8 @@ from .models import User
 AUTH_MENU = [
     {'title': _('Личный кабинет'), 'url_name': 'profile'},
     {'title': _('Редактировать профиль'), 'url_name': 'edit_profile'},
-    {'title': _('История заказов'), 'url_name': 'index'},
-    {'title': _('История просмотров'), 'url_name': 'index'},
+    {'title': _('История заказов'), 'url_name': 'orders_history'},
+    # {'title': _('История просмотров'), 'url_name': 'index'},
 ]
 NOT_AUTH_MENU = [
     {'title': _('Вход'), 'url_name': 'login'},
@@ -57,6 +57,10 @@ class Signup(CreateView):
         return self.form_invalid(form)
 
 
+class SignupWithOrder(Signup):
+    success_url = reverse_lazy('create_order')
+
+
 class LogInView(LoginView):
     template_name = 'app_users/login.html'
     authentication_form = UserLoginForm
@@ -76,7 +80,7 @@ class EditProfileView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('profile')
     extra_context = {'menu': AUTH_MENU,
                      'breadcrumbs': [_('Личный кабинет'), _('Редактировать профиль')],
-                     'title': _('Личный кабинет'),
+                     'title': _('Редактировать профиль'),
                      'current_elem': 'edit_profile'
                      }
 
