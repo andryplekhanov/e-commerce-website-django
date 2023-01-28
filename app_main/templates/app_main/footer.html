@@ -8,9 +8,7 @@
                 <a class="logo Footer-logo" href="index.html">
                     <img class="logo-image" src="{% static 'assets/img/logo_footer.png' %}" alt="logo_footer.png"/>
                 </a>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincid unt ut
-                    laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad
-                </p>
+                <p>{{ site_settings.description }}</p>
                 <ul class="menu menu_img menu_smallImg Footer-menuSoc">
                     <li class="menu-item">
                         <a class="menu-link" href="#">
@@ -63,32 +61,25 @@
                 </ul>
             </div>
             <div class="row-block">
-                <strong class="Footer-title">My Account</strong>
+                <strong class="Footer-title">{% trans 'Все категории' %}</strong>
                 <ul class="menu menu_vt Footer-menu">
-                    <li class="menu-item">
-                        <a class="menu-link" href="#">Accessories</a>
-                    </li>
-                    <li class="menu-item">
-                        <a class="menu-link" href="#">Bags</a>
-                    </li>
-                    <li class="menu-item">
-                        <a class="menu-link" href="#">Cameras</a>
-                    </li>
-                    <li class="menu-item">
-                        <a class="menu-link" href="#">Clothings</a>
-                    </li>
-                    <li class="menu-item">
-                        <a class="menu-link" href="#">Electronics</a>
-                    </li>
-                    <li class="menu-item">
-                        <a class="menu-link" href="#">Fashion</a>
-                    </li>
+                    {% if base_menu %}
+                        {% for category in base_menu|slice:10 %}
+                        <li class="menu-item">
+                            <a class="menu-link" href="{% url 'catalog_for_category' category.slug %}">
+                                {{ category.name }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    {% endif %}
                 </ul>
             </div>
             <div class="row-block">
-                <strong class="Footer-title">Contacts</strong>
-                <p>Phone: 8.800.200.600<br>Email: Support@ninzio.com<br>Skype: techno<br>Address: New York, north<br>Avenue
-                    26/7<br>0057
+                <strong class="Footer-title">{% trans 'Контактная информация' %}</strong>
+                <p>{% trans 'Телефон' %}: {{ site_settings.phone_number }}<br>
+                    Email: {{ site_settings.email }}<br>
+                    {% trans 'Город' %}: {{ site_settings.city }}<br>
+                    {% trans 'Адрес' %}: {{ site_settings.address }}
                 </p>
             </div>
         </div>
