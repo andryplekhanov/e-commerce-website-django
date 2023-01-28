@@ -4,6 +4,11 @@ from .singleton_model import SingletonModel
 
 
 class SiteSettings(SingletonModel):
+    email = models.EmailField('email', unique=True, null=True, blank=True)
+    phone_number = models.CharField(max_length=17, blank=True, verbose_name=_('номер телефона'), unique=True)
+    city = models.CharField(max_length=30, blank=True, verbose_name=_('город'))
+    address = models.CharField(max_length=100, blank=True, verbose_name=_('адрес'))
+    description = models.TextField(blank=True, verbose_name=_('краткое описание для футера'))
     express_delivery_price = models.DecimalField(max_digits=10, decimal_places=2,
                                                  verbose_name=_('цена экспресс доставки'))
     edge_for_free_delivery = models.DecimalField(max_digits=10, decimal_places=2,
